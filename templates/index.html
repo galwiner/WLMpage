@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    <script type=text/javascript>
+        $(function () {
+            $('a#calculate').bind('click', function () {
+                $.getJSON($SCRIPT_ROOT + '/_pollWLM', {}, function (data) {
+                    $("#result").text(data.result);
+                });
+                return false;
+            });
+        });
+
+        (function worker() {
+            $.ajax({
+                url: '/_pollWLM',
+                success: function (data) {
+                    $('#result').text(data.result);
+                },
+                complete: function () {
+                    // Schedule the next request when the current one's complete
+                    setTimeout(worker, 500);
+                }
+            });
+        })();
+    </script>
+    <p><span id=result>?</span>
+    <p><a href=# id=calculate>poll WLM</a>
+
+    <div id="graph"></div>
+    <label for="channels">Channels:</label>
+    <label for="chan1box">Chan 1</label>
+    <div class="row">
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+                <button type="button" class="btn btn-secondary">1</button>
+                <button type="button" class="btn btn-secondary">2</button>
+                <button type="button" class="btn btn-secondary">3</button>
+                <button type="button" class="btn btn-secondary">4</button>
+                <button type="button" class="btn btn-secondary">5</button>
+                <button type="button" class="btn btn-secondary">6</button>
+                <button type="button" class="btn btn-secondary">7</button>
+                <button type="button" class="btn btn-secondary">8</button>
+            </div>
+        </div>
+
+
+
+
+
+
+
+{% endblock %}
