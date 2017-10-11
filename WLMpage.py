@@ -62,3 +62,10 @@ def bokeh():
 
 if __name__ == '__main__':
     app.run(debug=True)
+# working code to get frequency for WLM
+
+#r.lib.Operation(r.cCtrlStartMeasurement)
+#r.lib.SetSwitcherMode(1)
+#get_wavelength = r.lib.GetFrequencyNum
+#get_wavelength.restype = c_double
+#freq = get_wavelength(1,0)
