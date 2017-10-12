@@ -53,6 +53,12 @@
                 return res;
             }
 
+            function getDataChannel(chan){
+                return chan
+            }
+
+
+
             // Set up the control widget
 
             var updateInterval = 100;
@@ -91,14 +97,14 @@
 
                 plot.draw();
                 setTimeout(update, updateInterval);
-                $("#chan1").text((Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan2").text((Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan3").text((Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan4").text((Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan5").text((Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan6").text((Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan7").text((Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan8").text((Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan1").text("Master: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan2").text("MOT COOLING: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan3").text("MOT REPUMP: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan4").text("Chan 4: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan5").text("Chan 5: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan6").text("Chan 6: " +(Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan7").text("Chan 7: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan8").text("Chan 8: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
 
             }
 
@@ -117,56 +123,57 @@
         }
     </style>
     <script type=text/javascript>
-        $(function () {
-            $('a#calculate').bind('click', function () {
-                $.getJSON($SCRIPT_ROOT + '/_pollWLM', {}, function (data) {
-                    $("#result").text(data.result);
+{#        $(function () {#}
+{#            $('a#calculate').bind('click', function () {#}
+{#                $.getJSON($SCRIPT_ROOT + '/_pollWLM', {}, function (data) {#}
+{#                    $("#result").text(data.result);#}
+{##}
+{#                });#}
+{#                return false;#}
+{#            });#}
+{#        });#}
 
-                });
-                return false;
-            });
-        });
+{#        (function worker() {#}
+{#            $.ajax({#}
+{#                url: '/_pollWLM',#}
+{#                success: function (data) {#}
+{#                    $('#result').text(data.result);#}
+{#                    $("#result").text(data.result);#}
+{#                },#}
+{#                complete: function () {#}
+{#                    // Schedule the next request when the current one's complete#}
+{#                    setTimeout(worker, 500);#}
+{#                }#}
+{#            });#}
+{#        })();#}
 
-        (function worker() {
-            $.ajax({
-                url: '/_pollWLM',
-                success: function (data) {
-                    $('#result').text(data.result);
-                    $("#result").text(data.result);
-                },
-                complete: function () {
-                    // Schedule the next request when the current one's complete
-                    setTimeout(worker, 500);
-                }
-            });
-        })();
         $(".ChanToggleButton").click(function () {
             $(this).button('toggle');
         });
 
     </script>
-    <p><span id=result>?</span>
-    <p><a href=# id=calculate>poll WLM</a>
+    {#<p><span id=result>?</span>
+    <p><a href=# id=calculate>poll WLM</a>#}
 
 
     <div class="container-fluid" id="freqIndicator">
         <div class="row">
-            <div class="col-lg-12 chanfreq" id="chan1">348.2123 Thz</div>
+            <div class="col-lg-12 chanfreq" id="chan1"></div>
         </div>
         <div class="row">
-            <div class="col-lg-6 chanfreq" id="chan2">348.2123 Thz</div>
-            <div class="col-lg-6 chanfreq" id="chan3">2123123</div>
+            <div class="col-lg-6 chanfreq" id="chan2"></div>
+            <div class="col-lg-6 chanfreq" id="chan3"></div>
         </div>
         <div class="row">
-            <div class="col-lg-6 chanfreq" id="chan4">348.2123 Thz</div>
-            <div class="col-lg-6 chanfreq" id="chan5">2123123</div>
+            <div class="col-lg-6 chanfreq" id="chan4"></div>
+            <div class="col-lg-6 chanfreq" id="chan5"></div>
         </div>
         <div class="row">
-            <div class="col-lg-6 chanfreq" id="chan6">348.2123 Thz</div>
-            <div class="col-lg-6 chanfreq" id="chan7">348.2123 Thz</div>
+            <div class="col-lg-6 chanfreq" id="chan6"></div>
+            <div class="col-lg-6 chanfreq" id="chan7"></div>
         </div>
         <div class="row">
-            <div class="col-lg-12 chanfreq" id="chan8">348.2123 Thz</div>
+            <div class="col-lg-12 chanfreq" id="chan8"></div>
         </div>
     </div>
     <div class="btn-group">

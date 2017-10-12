@@ -19,16 +19,15 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
-            <h2>Firstenberg Lab WLM Page</h2>
+                <div class="col-lg-7">
+            <h2 id="topheading">Firstenberg Lab WLM Page</h2>
                     </div>
-                <div class="col-lg-6">
-            <div><img src={{ url_for('static', filename='HFL_logo.gif') }}></div>
+                <div class="col-lg-5">
+            <div><img id="highfinessLogo" src={{ url_for('static', filename='HFL_logo.gif') }}></div>
                 </div>
 </div>
 
         </div>
-        <p>HIGH FINESSE WLM located in lab 113</p>
     </div>
 
     {% block content %}
