@@ -7,7 +7,7 @@
 
             // We use an inline data source in the example, usually data would
             // be fetched from a server
-
+            var activeChannels = [0, 0, 0, 0, 0, 0, 0, 0];
             var data = [],
                 totalPoints = 300;
 
@@ -53,10 +53,9 @@
                 return res;
             }
 
-            function getDataChannel(chan){
+            function getDataChannel(chan) {
                 return chan
             }
-
 
 
             // Set up the control widget
@@ -85,9 +84,10 @@
                     max: 100
                 },
                 xaxis: {
-                    show: false
+                    show: true
                 }
             });
+
 
             function update() {
 
@@ -97,18 +97,35 @@
 
                 plot.draw();
                 setTimeout(update, updateInterval);
-                $("#chan1").text("Master: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+
+
+                if (activeChannels[0]){
+                    $("#chan1").text("Master: " + (Math.random() + 384.230406373).toFixed(5) + " THz")}else{
+                    $("#chan1").text("Master: OFF")
+                }
+
                 $("#chan2").text("MOT COOLING: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
                 $("#chan3").text("MOT REPUMP: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
                 $("#chan4").text("Chan 4: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
                 $("#chan5").text("Chan 5: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan6").text("Chan 6: " +(Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan6").text("Chan 6: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
                 $("#chan7").text("Chan 7: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
                 $("#chan8").text("Chan 8: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
 
             }
 
             update();
+
+            $('#chan1Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[0] = 1;
+                } else {
+                    activeChannels[0] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+
 
             // Add the Flot version string to the footer
 
@@ -123,29 +140,29 @@
         }
     </style>
     <script type=text/javascript>
-{#        $(function () {#}
-{#            $('a#calculate').bind('click', function () {#}
-{#                $.getJSON($SCRIPT_ROOT + '/_pollWLM', {}, function (data) {#}
-{#                    $("#result").text(data.result);#}
-{##}
-{#                });#}
-{#                return false;#}
-{#            });#}
-{#        });#}
+        {#        $(function () {#}
+        {#            $('a#calculate').bind('click', function () {#}
+        {#                $.getJSON($SCRIPT_ROOT + '/_pollWLM', {}, function (data) {#}
+        {#                    $("#result").text(data.result);#}
+        {##}
+        {#                });#}
+        {#                return false;#}
+        {#            });#}
+        {#        });#}
 
-{#        (function worker() {#}
-{#            $.ajax({#}
-{#                url: '/_pollWLM',#}
-{#                success: function (data) {#}
-{#                    $('#result').text(data.result);#}
-{#                    $("#result").text(data.result);#}
-{#                },#}
-{#                complete: function () {#}
-{#                    // Schedule the next request when the current one's complete#}
-{#                    setTimeout(worker, 500);#}
-{#                }#}
-{#            });#}
-{#        })();#}
+        {#        (function worker() {#}
+        {#            $.ajax({#}
+        {#                url: '/_pollWLM',#}
+        {#                success: function (data) {#}
+        {#                    $('#result').text(data.result);#}
+        {#                    $("#result").text(data.result);#}
+        {#                },#}
+        {#                complete: function () {#}
+        {#                    // Schedule the next request when the current one's complete#}
+        {#                    setTimeout(worker, 500);#}
+        {#                }#}
+        {#            });#}
+        {#        })();#}
 
         $(".ChanToggleButton").click(function () {
             $(this).button('toggle');
@@ -176,32 +193,46 @@
             <div class="col-lg-12 chanfreq" id="chan8"></div>
         </div>
     </div>
+
+    {#creating the channel toggle switches#}
     <div class="btn-group">
-        <label>MASTER channel 1:
-            <input type="checkbox" checked data-toggle="toggle">
+        <label class="checkbox-inline">
+            <input id="chan1Toggle" type="checkbox" data-toggle="toggle">MASTER
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" data-toggle="toggle"> MOT COOLING
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" data-toggle="toggle"> MOT REPUMP
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" data-toggle="toggle"> Chan 4
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" data-toggle="toggle"> Chan 5
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" data-toggle="toggle"> Chan 6
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" data-toggle="toggle"> Chan 7
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" data-toggle="toggle"> Chan 8
         </label>
     </div>
-    <div>
-        <div class="btn-group">
-            <label>MOT COOLING channel 2:
-                <input id="chan2toggle" type="checkbox" checked data-toggle="toggle">
-            </label>
-            <div id="chan2state"></div>
-        </div>
-    </div>
-    <label>MOT REPUMP channel 3:
-        <input type="checkbox" checked data-toggle="toggle">
-    </label>
-    <label>COLD EXP PROBE channel 4:
-        <input type="checkbox" checked data-toggle="toggle">
-    </label>
-    <label>TI SAPH channel 8:
-        <input type="checkbox" checked data-toggle="toggle">
-    </label>
-
     <div id="graph"></div>
 
     <script>
+        $(function () {
+
+            {#            $('#toggle-event').change(function () {#}
+            {#                $('#console-event').html('Toggle: ' + $(this).prop('checked'))#}
+            {#                console.log('this')#}
+            {##}
+            {#            })#}
+
+        })
         $(function () {
             $('#chan2toggle').change(function () {
                 $('#chan2state').html('Toggle: ' + $(this).prop('checked'))
@@ -212,7 +243,11 @@
             $("#freqIndicator").css('text-align', 'center')
             $("#freqIndicator").css('background', 'gray')
             $(".chanfreq").css('border-style', 'solid')
+
+
         })
+
+
     </script>
 
 
