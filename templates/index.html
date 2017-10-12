@@ -55,7 +55,7 @@
 
             // Set up the control widget
 
-            var updateInterval = 30;
+            var updateInterval = 100;
             $("#updateInterval").val(updateInterval).change(function () {
                 var v = $(this).val();
                 if (v && !isNaN(+v)) {
@@ -69,8 +69,8 @@
                 }
             });
 
-            		var plot = $.plot("#graph", [ getRandomData() ], {
-{#            var plot = $.plot("#graph", [getWLMdata()], {#}
+            var plot = $.plot("#graph", [getRandomData()], {
+                {#            var plot = $.plot("#graph", [getWLMdata()], {#}
                 series: {
                     shadowSize: 0	// Drawing is faster without shadows
                 },
@@ -85,15 +85,21 @@
 
             function update() {
 
-                plot.setData([getRandomData(),getWLMdata(),getRandomData()]);
+                plot.setData([getRandomData(), getWLMdata(), getRandomData()]);
 
                 // Since the axes don't change, we don't need to call plot.setupGrid()
 
                 plot.draw();
                 setTimeout(update, updateInterval);
-                $("#chan1").text('updated')
-                $("#chan2").text('updated')
-                $("#chan3").text('updated')
+                $("#chan1").text((Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan2").text((Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan3").text((Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan4").text((Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan5").text((Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan6").text((Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan7").text((Math.random() + 384.230406373).toFixed(5) + " THz")
+                $("#chan8").text((Math.random() + 384.230406373).toFixed(5) + " THz")
+
             }
 
             update();
@@ -136,15 +142,33 @@
         })();
         $(".ChanToggleButton").click(function () {
             $(this).button('toggle');
-            console.log('this');
         });
 
     </script>
     <p><span id=result>?</span>
     <p><a href=# id=calculate>poll WLM</a>
 
-    <div id="graph"></div>
 
+    <div class="container-fluid" id="freqIndicator">
+        <div class="row">
+            <div class="col-lg-12 chanfreq" id="chan1">348.2123 Thz</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 chanfreq" id="chan2">348.2123 Thz</div>
+            <div class="col-lg-6 chanfreq" id="chan3">2123123</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 chanfreq" id="chan4">348.2123 Thz</div>
+            <div class="col-lg-6 chanfreq" id="chan5">2123123</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 chanfreq" id="chan6">348.2123 Thz</div>
+            <div class="col-lg-6 chanfreq" id="chan7">348.2123 Thz</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 chanfreq" id="chan8">348.2123 Thz</div>
+        </div>
+    </div>
     <div class="btn-group">
         <label>MASTER channel 1:
             <input type="checkbox" checked data-toggle="toggle">
@@ -167,36 +191,20 @@
     <label>TI SAPH channel 8:
         <input type="checkbox" checked data-toggle="toggle">
     </label>
-<div class="container-fluid" id="freqIndicator">
-  <div class="row">
-    <div class="col-lg-12 chanfreq" id="chan1">348.2123 Thz</div>
-  </div>
-<div class="row">
-    <div class="col-lg-4 chanfreq" id="chan2">348.2123 Thz</div>
-    <div class="col-lg-4 chanfreq" id="chan3">2123123</div>
-    <div class="col-lg-4 chanfreq" id="chan4">2</div>
-  </div>
-<div class="row">
-    <div class="col-lg-4 chanfreq" id="chan5">348.2123 Thz</div>
-    <div class="col-lg-4 chanfreq" id="chan6">2123123</div>
-    <div class="col-lg-4 chanfreq" id="chan7">2</div>
-  </div>
-<div class="row">
-    <div class="col-lg-4 chanfreq" id="chan8">348.2123 Thz</div>
-    <div class="col-lg-4 chanfreq"></div>
-    <div class="col-lg-4 chanfreq"></div>
-</div>
-</div>
+
+    <div id="graph"></div>
+
     <script>
         $(function () {
             $('#chan2toggle').change(function () {
                 $('#chan2state').html('Toggle: ' + $(this).prop('checked'))
                 $('#chan2').text('this')
+
             })
-            $("#freqIndicator").css({ fontSize: 50})
-            $("#freqIndicator").css('text-align','center')
- $("#freqIndicator").css('background','gray')
-            $(".chanfreq").css('border-style','solid')
+            $("#freqIndicator").css({fontSize: 50})
+            $("#freqIndicator").css('text-align', 'center')
+            $("#freqIndicator").css('background', 'gray')
+            $(".chanfreq").css('border-style', 'solid')
         })
     </script>
 
