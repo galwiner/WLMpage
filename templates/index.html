@@ -91,6 +91,9 @@
 
                 plot.draw();
                 setTimeout(update, updateInterval);
+                $("#chan1").text('updated')
+                $("#chan2").text('updated')
+                $("#chan3").text('updated')
             }
 
             update();
@@ -166,24 +169,34 @@
     </label>
 <div class="container-fluid" id="freqIndicator">
   <div class="row">
-    <div class="col-lg-3">348.2123 Thz</div>
-    <div class="col-lg-3">2123123</div>
-    <div class="col-lg-3">2</div>
-    <div class="col-lg-3">2</div>
+    <div class="col-lg-12 chanfreq" id="chan1">348.2123 Thz</div>
   </div>
 <div class="row">
-    <div class="col-lg-3">2</div>
-    <div class="col-lg-3">2</div>
-    <div class="col-lg-3">2</div>
-    <div class="col-lg-3">2</div>
+    <div class="col-lg-4 chanfreq" id="chan2">348.2123 Thz</div>
+    <div class="col-lg-4 chanfreq" id="chan3">2123123</div>
+    <div class="col-lg-4 chanfreq" id="chan4">2</div>
   </div>
+<div class="row">
+    <div class="col-lg-4 chanfreq" id="chan5">348.2123 Thz</div>
+    <div class="col-lg-4 chanfreq" id="chan6">2123123</div>
+    <div class="col-lg-4 chanfreq" id="chan7">2</div>
+  </div>
+<div class="row">
+    <div class="col-lg-4 chanfreq" id="chan8">348.2123 Thz</div>
+    <div class="col-lg-4 chanfreq"></div>
+    <div class="col-lg-4 chanfreq"></div>
+</div>
 </div>
     <script>
         $(function () {
             $('#chan2toggle').change(function () {
                 $('#chan2state').html('Toggle: ' + $(this).prop('checked'))
+                $('#chan2').text('this')
             })
-            $("#freqIndicator").css({ fontSize: 80})
+            $("#freqIndicator").css({ fontSize: 50})
+            $("#freqIndicator").css('text-align','center')
+ $("#freqIndicator").css('background','gray')
+            $(".chanfreq").css('border-style','solid')
         })
     </script>
 
