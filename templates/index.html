@@ -99,18 +99,55 @@
                 setTimeout(update, updateInterval);
 
 
-                if (activeChannels[0]){
-                    $("#chan1").text("Master: " + (Math.random() + 384.230406373).toFixed(5) + " THz")}else{
+                if (activeChannels[0]) {
+                    $("#chan1").text("Master: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
                     $("#chan1").text("Master: OFF")
                 }
+                if (activeChannels[1]) {
+                    $("#chan2").text("MOT COOLING: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan2").text("MOT COOLING: OFF")
+                }
+                if (activeChannels[2]) {
+                    $("#chan3").text("Chan3: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan3").text("Chan3: OFF")
+                }
+                if (activeChannels[3]) {
+                    $("#chan4").text("Chan4: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan4").text("Chan4: OFF")
+                }
+                if (activeChannels[4]) {
+                    $("#chan5").text("Chan5: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan5").text("Chan5: OFF")
+                }
+                if (activeChannels[5]) {
+                    $("#chan6").text("Chan6: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan6").text("Chan6: OFF")
+                }
+                if (activeChannels[6]) {
+                    $("#chan7").text("Chan7: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan7").text("Chan7: OFF")
+                }
+                if (activeChannels[7]) {
+                    $("#chan8").text("Chan8: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan8").text("Chan8: OFF")
+                }
 
-                $("#chan2").text("MOT COOLING: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan3").text("MOT REPUMP: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan4").text("Chan 4: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan5").text("Chan 5: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan6").text("Chan 6: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan7").text("Chan 7: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
-                $("#chan8").text("Chan 8: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+
+                {#                $("#chan2").text("MOT COOLING: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+                {#                $("#chan3").text("MOT REPUMP: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+                {#                $("#chan4").text("Chan 4: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+                {#                $("#chan5").text("Chan 5: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+{#                $("#chan6").text("Chan 6: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+{#                $("#chan7").text("Chan 7: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+{#                $("#chan8").text("Chan 8: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
 
             }
 
@@ -125,11 +162,74 @@
                 console.log(activeChannels);
 
             });
+            $('#chan2Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[1] = 1;
+                } else {
+                    activeChannels[1] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+            $('#chan3Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[2] = 1;
+                } else {
+                    activeChannels[2] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+            $('#chan4Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[3] = 1;
+                } else {
+                    activeChannels[3] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+            $('#chan5Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[4] = 1;
+                } else {
+                    activeChannels[4] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+            $('#chan6Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[5] = 1;
+                } else {
+                    activeChannels[5] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+            $('#chan7Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[6] = 1;
+                } else {
+                    activeChannels[6] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+            $('#chan8Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[7] = 1;
+                } else {
+                    activeChannels[7] = 0;
+                }
+                console.log(activeChannels);
+
+            });
 
 
             // Add the Flot version string to the footer
 
-            $("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
+
         });
     </script>
 
@@ -200,25 +300,25 @@
             <input id="chan1Toggle" type="checkbox" data-toggle="toggle">MASTER
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" data-toggle="toggle"> MOT COOLING
+            <input id="chan2Toggle" type="checkbox" data-toggle="toggle"> MOT COOLING
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" data-toggle="toggle"> MOT REPUMP
+            <input id="chan3Toggle" type="checkbox" data-toggle="toggle"> MOT REPUMP
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" data-toggle="toggle"> Chan 4
+            <input id="chan4Toggle" type="checkbox" data-toggle="toggle"> Chan 4
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" data-toggle="toggle"> Chan 5
+            <input id="chan5Toggle" type="checkbox" data-toggle="toggle"> Chan 5
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" data-toggle="toggle"> Chan 6
+            <input id="chan6Toggle" type="checkbox" data-toggle="toggle"> Chan 6
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" data-toggle="toggle"> Chan 7
+            <input id="chan7Toggle" type="checkbox" data-toggle="toggle"> Chan 7
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" data-toggle="toggle"> Chan 8
+            <input id="chan8Toggle" type="checkbox" data-toggle="toggle"> Chan 8
         </label>
     </div>
     <div id="graph"></div>
