@@ -1,65 +1,354 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-
-    <script type=text/javascript>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
         $(function () {
-            $('a#calculate').bind('click', function () {
-                $.getJSON($SCRIPT_ROOT + '/_pollWLM', {}, function (data) {
-                    $("#result").text(data.result);
 
-                });
-                return false;
-            });
-        });
+            // We use an inline data source in the example, usually data would
+            // be fetched from a server
+            var activeChannels = [0, 0, 0, 0, 0, 0, 0, 0];
+            var data = [],
+                totalPoints = 300;
 
-        (function worker() {
-            $.ajax({
-                url: '/_pollWLM',
-                success: function (data) {
-                    $('#result').text(data.result);
-                    $("#result").text(data.result);
-                },
-                complete: function () {
-                    // Schedule the next request when the current one's complete
-                    setTimeout(worker, 500);
+            function getRandomData() {
+
+                if (data.length > 0)
+                    data = data.slice(1);
+
+                // Do a random walk
+
+                while (data.length < totalPoints) {
+
+
+                    var prev = data.length > 0 ? data[data.length - 1] : 50,
+                        y = prev + Math.random() * 10 - 5;
+
+                    if (y < 0) {
+                        y = 0;
+                    } else if (y > 100) {
+                        y = 100;
+                    }
+
+                    data.push(y);
+                }
+
+                // Zip the generated y values with the x values
+
+                var res = [];
+                for (var i = 0; i < data.length; ++i) {
+                    res.push([i, data[i]])
+                }
+
+                return res;
+            }
+
+            function getWLMdata() {
+                var res = [];
+                data = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
+                for (var i = 0; i < data.length; ++i) {
+                    res.push([i, data[i]])
+                }
+
+                return res;
+            }
+
+            function getDataChannel(chan) {
+                return chan
+            }
+
+
+            // Set up the control widget
+
+            var updateInterval = 100;
+            $("#updateInterval").val(updateInterval).change(function () {
+                var v = $(this).val();
+                if (v && !isNaN(+v)) {
+                    updateInterval = +v;
+                    if (updateInterval < 1) {
+                        updateInterval = 1;
+                    } else if (updateInterval > 2000) {
+                        updateInterval = 2000;
+                    }
+                    $(this).val("" + updateInterval);
                 }
             });
-        })();
+
+            var plot = $.plot("#graph", [getRandomData()], {
+                {#            var plot = $.plot("#graph", [getWLMdata()], {#}
+                series: {
+                    shadowSize: 0	// Drawing is faster without shadows
+                },
+                yaxis: {
+                    min: 0,
+                    max: 100
+                },
+                xaxis: {
+                    show: true
+                }
+            });
+
+
+            function update() {
+
+                plot.setData([getRandomData(), getWLMdata(), getRandomData()]);
+
+                // Since the axes don't change, we don't need to call plot.setupGrid()
+
+                plot.draw();
+                setTimeout(update, updateInterval);
+
+
+                if (activeChannels[0]) {
+                    $("#chan1").text("Master: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan1").text("Master: OFF")
+                }
+                if (activeChannels[1]) {
+                    $("#chan2").text("MOT COOLING: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan2").text("MOT COOLING: OFF")
+                }
+                if (activeChannels[2]) {
+                    $("#chan3").text("Chan3: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan3").text("Chan3: OFF")
+                }
+                if (activeChannels[3]) {
+                    $("#chan4").text("Chan4: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan4").text("Chan4: OFF")
+                }
+                if (activeChannels[4]) {
+                    $("#chan5").text("Chan5: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan5").text("Chan5: OFF")
+                }
+                if (activeChannels[5]) {
+                    $("#chan6").text("Chan6: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan6").text("Chan6: OFF")
+                }
+                if (activeChannels[6]) {
+                    $("#chan7").text("Chan7: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan7").text("Chan7: OFF")
+                }
+                if (activeChannels[7]) {
+                    $("#chan8").text("Chan8: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                } else {
+                    $("#chan8").text("Chan8: OFF")
+                }
+
+
+                {#                $("#chan2").text("MOT COOLING: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+                {#                $("#chan3").text("MOT REPUMP: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+                {#                $("#chan4").text("Chan 4: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+                {#                $("#chan5").text("Chan 5: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+{#                $("#chan6").text("Chan 6: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+{#                $("#chan7").text("Chan 7: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+{#                $("#chan8").text("Chan 8: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+
+            }
+
+            update();
+
+            $('#chan1Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[0] = 1;
+                } else {
+                    activeChannels[0] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+            $('#chan2Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[1] = 1;
+                } else {
+                    activeChannels[1] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+            $('#chan3Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[2] = 1;
+                } else {
+                    activeChannels[2] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+            $('#chan4Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[3] = 1;
+                } else {
+                    activeChannels[3] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+            $('#chan5Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[4] = 1;
+                } else {
+                    activeChannels[4] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+            $('#chan6Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[5] = 1;
+                } else {
+                    activeChannels[5] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+            $('#chan7Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[6] = 1;
+                } else {
+                    activeChannels[6] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+            $('#chan8Toggle').change(function () {
+                if ($(this).prop('checked')) {
+                    activeChannels[7] = 1;
+                } else {
+                    activeChannels[7] = 0;
+                }
+                console.log(activeChannels);
+
+            });
+
+
+            // Add the Flot version string to the footer
+
+
+        });
+    </script>
+
+    <style>
+        #graph {
+            width: 100%;
+            height: 200px
+        }
+    </style>
+    <script type=text/javascript>
+        {#        $(function () {#}
+        {#            $('a#calculate').bind('click', function () {#}
+        {#                $.getJSON($SCRIPT_ROOT + '/_pollWLM', {}, function (data) {#}
+        {#                    $("#result").text(data.result);#}
+        {##}
+        {#                });#}
+        {#                return false;#}
+        {#            });#}
+        {#        });#}
+
+        {#        (function worker() {#}
+        {#            $.ajax({#}
+        {#                url: '/_pollWLM',#}
+        {#                success: function (data) {#}
+        {#                    $('#result').text(data.result);#}
+        {#                    $("#result").text(data.result);#}
+        {#                },#}
+        {#                complete: function () {#}
+        {#                    // Schedule the next request when the current one's complete#}
+        {#                    setTimeout(worker, 500);#}
+        {#                }#}
+        {#            });#}
+        {#        })();#}
+
         $(".ChanToggleButton").click(function () {
             $(this).button('toggle');
-            console.log('this');
         });
 
     </script>
-    <p><span id=result>?</span>
-    <p><a href=# id=calculate>poll WLM</a>
+    {#<p><span id=result>?</span>
+    <p><a href=# id=calculate>poll WLM</a>#}
 
-    <div id="graph"></div>
-    <label for="channels">Channels:</label>
 
-    <div class="row">
-        <label class="container">One
-  <input type="checkbox" checked="checked">
-  <span class="checkmark"></span>
-</label>
-
-<label class="container">Two
-  <input type="checkbox">
-  <span class="checkmark"></span>
-</label>
-
-<label class="container">Three
-  <input type="checkbox">
-  <span class="checkmark"></span>
-</label>
-
-<label class="container">Four
-  <input type="checkbox">
-  <span class="checkmark"></span>
-</label>
+    <div class="container-fluid" id="freqIndicator">
+        <div class="row">
+            <div class="col-lg-12 chanfreq" id="chan1"></div>
         </div>
+        <div class="row">
+            <div class="col-lg-6 chanfreq" id="chan2"></div>
+            <div class="col-lg-6 chanfreq" id="chan3"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 chanfreq" id="chan4"></div>
+            <div class="col-lg-6 chanfreq" id="chan5"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 chanfreq" id="chan6"></div>
+            <div class="col-lg-6 chanfreq" id="chan7"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 chanfreq" id="chan8"></div>
+        </div>
+    </div>
 
+    {#creating the channel toggle switches#}
+    <div class="btn-group">
+        <label class="checkbox-inline">
+            <input id="chan1Toggle" type="checkbox" data-toggle="toggle">MASTER
+        </label>
+        <label class="checkbox-inline">
+            <input id="chan2Toggle" type="checkbox" data-toggle="toggle"> MOT COOLING
+        </label>
+        <label class="checkbox-inline">
+            <input id="chan3Toggle" type="checkbox" data-toggle="toggle"> MOT REPUMP
+        </label>
+        <label class="checkbox-inline">
+            <input id="chan4Toggle" type="checkbox" data-toggle="toggle"> Chan 4
+        </label>
+        <label class="checkbox-inline">
+            <input id="chan5Toggle" type="checkbox" data-toggle="toggle"> Chan 5
+        </label>
+        <label class="checkbox-inline">
+            <input id="chan6Toggle" type="checkbox" data-toggle="toggle"> Chan 6
+        </label>
+        <label class="checkbox-inline">
+            <input id="chan7Toggle" type="checkbox" data-toggle="toggle"> Chan 7
+        </label>
+        <label class="checkbox-inline">
+            <input id="chan8Toggle" type="checkbox" data-toggle="toggle"> Chan 8
+        </label>
+    </div>
+    <div id="graph"></div>
+
+    <script>
+        $(function () {
+
+            {#            $('#toggle-event').change(function () {#}
+            {#                $('#console-event').html('Toggle: ' + $(this).prop('checked'))#}
+            {#                console.log('this')#}
+            {##}
+            {#            })#}
+
+        })
+        $(function () {
+            $('#chan2toggle').change(function () {
+                $('#chan2state').html('Toggle: ' + $(this).prop('checked'))
+                $('#chan2').text('this')
+
+            })
+            $("#freqIndicator").css({fontSize: 50})
+            $("#freqIndicator").css('text-align', 'center')
+            $("#freqIndicator").css('background', 'gray')
+            $(".chanfreq").css('border-style', 'solid')
+
+
+        })
+
+
+    </script>
 
 
 
