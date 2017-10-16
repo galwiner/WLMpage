@@ -90,6 +90,8 @@
 
 
             function update() {
+                $("#chan1").text(wlmData)
+
 
                 plot.setData([getRandomData(), getWLMdata(), getRandomData()]);
 
@@ -100,7 +102,8 @@
 
 
                 if (activeChannels[0]) {
-                    $("#chan1").text("Master: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                    $("#chan1").text(wlmData)
+                    {#                    $("#chan1").text("Master: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
                 } else {
                     $("#chan1").text("Master: OFF")
                 }
@@ -145,9 +148,9 @@
                 {#                $("#chan3").text("MOT REPUMP: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
                 {#                $("#chan4").text("Chan 4: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
                 {#                $("#chan5").text("Chan 5: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
-{#                $("#chan6").text("Chan 6: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
-{#                $("#chan7").text("Chan 7: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
-{#                $("#chan8").text("Chan 8: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+                {#                $("#chan6").text("Chan 6: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+                {#                $("#chan7").text("Chan 7: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
+                {#                $("#chan8").text("Chan 8: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
 
             }
 
@@ -160,6 +163,22 @@
                     activeChannels[0] = 0;
                 }
                 console.log(activeChannels);
+                var jsonActiveChan= 'GAL';
+{#                JSON.stringify(activeChannels);#}
+                $.ajax({
+            url: '_setWLMChannels',
+            data: vvJSON.stringify(activeChannels),
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+
+{#                $.post({{ url_for('setWLMChannels'), activeChannels:"Gal"} }})#}
+
 
             });
             $('#chan2Toggle').change(function () {
@@ -240,29 +259,28 @@
         }
     </style>
     <script type=text/javascript>
-        {#        $(function () {#}
-        {#            $('a#calculate').bind('click', function () {#}
-        {#                $.getJSON($SCRIPT_ROOT + '/_pollWLM', {}, function (data) {#}
-        {#                    $("#result").text(data.result);#}
+        {#                $(function () {#}
+        {#                    $('a#calculate').bind('click', function () {#}
+        {#                        $.getJSON($SCRIPT_ROOT + '/_pollWLM', {}, function (data) {#}
+        {#                            $("#result").text(data.result);#}
         {##}
+        {#                        });#}
+        {#                        return false;#}
+        {#                    });#}
         {#                });#}
-        {#                return false;#}
-        {#            });#}
-        {#        });#}
-
-        {#        (function worker() {#}
-        {#            $.ajax({#}
-        {#                url: '/_pollWLM',#}
-        {#                success: function (data) {#}
-        {#                    $('#result').text(data.result);#}
-        {#                    $("#result").text(data.result);#}
-        {#                },#}
-        {#                complete: function () {#}
-        {#                    // Schedule the next request when the current one's complete#}
-        {#                    setTimeout(worker, 500);#}
-        {#                }#}
-        {#            });#}
-        {#        })();#}
+        var wlmData;
+        (function worker() {
+            $.ajax({
+                url: '/_getWLMData',
+                success: function (data) {
+                    wlmData = data.result;
+                },
+                complete: function () {
+                    // Schedule the next request when the current one's complete
+                    setTimeout(worker, 500);
+                }
+            });
+        })();
 
         $(".ChanToggleButton").click(function () {
             $(this).button('toggle');
@@ -271,7 +289,6 @@
     </script>
     {#<p><span id=result>?</span>
     <p><a href=# id=calculate>poll WLM</a>#}
-
 
     <div class="container-fluid" id="freqIndicator">
         <div class="row">
@@ -321,6 +338,7 @@
             <input id="chan8Toggle" type="checkbox" data-toggle="toggle"> Chan 8
         </label>
     </div>
+
     <div id="graph"></div>
 
     <script>
