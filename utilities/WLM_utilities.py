@@ -10,10 +10,18 @@ def WLMstart():
 
 
 
+
 def getFreqChan(chan):
     get_freq = r.lib.GetFrequencyNum
     get_freq.restype = c_double
     return get_freq(chan, 0)
+
+
+def setExposure(chan,exposure):
+    set_exp = r.lib.SetExposureNum
+    set_exp.restype = c_double
+    ret=set_exp(chan,1,50)
+    return ret
 
 
 if __name__ == '__main__':
