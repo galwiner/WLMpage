@@ -9,6 +9,7 @@ def WLMstart():
     r.lib.SetSwitcherMode(1)
 
 
+
 def getFreqChan(chan):
     get_freq = r.lib.GetFrequencyNum
     get_freq.restype = c_double
@@ -18,4 +19,4 @@ def getFreqChan(chan):
 if __name__ == '__main__':
     r = spectrometer.Spectrometer()
     WLMstart()
-    getFreqChan(1)
+    print(getFreqChan(1))

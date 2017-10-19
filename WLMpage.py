@@ -1,15 +1,9 @@
 import random
-
-# from bokeh.embed import components
-# from bokeh.plotting import figure
-# from bokeh.resources import INLINE
-# from bokeh.util.string import encode_utf8
-
-
 import os
 from flask import Flask, jsonify, render_template, request, json
 
 import utilities.database_utilities as db
+import utilities.WLM_utilities as wlm
 import threading
 import atexit
 import datetime
@@ -24,6 +18,8 @@ commonDataStruct = []
 dataLock = threading.Lock()
 # thread handler
 yourThread = threading.Thread()
+
+wlm.WLMstart()
 
 
 def create_app():
@@ -74,7 +70,7 @@ def getWLMData():
         if len(commonDataStruct) > 1:
             # activeChannels=[i for i, e in enumerate(a) if e != 0]
 
-            dat={i: i for i in range(1, 9)}
+            dat={i: wlm.getFreqChan(i) for i in range(1, 9)}
 
             return jsonify(dat)  # returning data from the server to the client works
             # return jsonify(result=my_var)
@@ -94,8 +90,8 @@ def index():
 
 
 if __name__ == '__main__':
-    # app.run(host='10.10.10.3', port='5000')
-    app.run(debug=True)
+    app.run(host='10.10.10.3', port='5000')
+    # app.run(debug=True)
 # working code to get frequency for WLM
 
 # r.lib.Operation(r.cCtrlStartMeasurement)
