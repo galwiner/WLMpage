@@ -90,7 +90,9 @@
 
 
             function update() {
-                $("#chan1").text(wlmData)
+
+                $("#chan1").text("MASTER: " +  wlmData)
+
 
 
                 plot.setData([getRandomData(), getWLMdata(), getRandomData()]);
@@ -102,13 +104,14 @@
 
 
                 if (activeChannels[0]) {
-                    $("#chan1").text(wlmData)
+                    $("#chan1").text(wlmData[1]);
+
                     {#                    $("#chan1").text("Master: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
                 } else {
                     $("#chan1").text("Master: OFF")
                 }
                 if (activeChannels[1]) {
-                    $("#chan2").text("MOT COOLING: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                    $("#chan2").text("MOT COOLING: " + wlmData[2])
                 } else {
                     $("#chan2").text("MOT COOLING: OFF")
                 }
@@ -162,25 +165,24 @@
                 } else {
                     activeChannels[0] = 0;
                 }
+
                 console.log(activeChannels);
-                var jsonActiveChan= 'GAL';
-{#                JSON.stringify(activeChannels);#}
+                {#                JSON.stringify(activeChannels);#}
                 $.ajax({
-            url: '_setWLMChannels',
-            data: vvJSON.stringify(activeChannels),
-            type: 'POST',
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
+                    method:'POST',
+                    contentType: "application/json",
+                    url:'_setWLMChannels',
+                    data: JSON.stringify({'activeChannels':activeChannels}),
+                    error: function(e) {
+                        console.log(e)
+                    },
+                    dataType: 'json'});
+                });
 
-{#                $.post({{ url_for('setWLMChannels'), activeChannels:"Gal"} }})#}
+                {#                $.post({{ url_for('setWLMChannels'), activeChannels:"Gal"} }})#}
 
 
-            });
+
             $('#chan2Toggle').change(function () {
                 if ($(this).prop('checked')) {
                     activeChannels[1] = 1;
@@ -246,8 +248,22 @@
             });
 
 
-            // Add the Flot version string to the footer
 
+            var wlmData = {};
+            (function worker() {
+                $.ajax({
+                    dataType: "json",
+                    url: '_getWLMData/',
+                    success: function (data) {
+                        wlmData = data;
+
+                    },
+                    complete: function () {
+                        // Schedule the next request when the current one's complete
+                        setTimeout(worker, 300);
+                    }
+                });
+            })();
 
         });
     </script>
@@ -268,19 +284,20 @@
         {#                        return false;#}
         {#                    });#}
         {#                });#}
-        var wlmData;
-        (function worker() {
-            $.ajax({
-                url: '/_getWLMData',
-                success: function (data) {
-                    wlmData = data.result;
-                },
-                complete: function () {
-                    // Schedule the next request when the current one's complete
-                    setTimeout(worker, 500);
-                }
-            });
-        })();
+{#        var wlmData;#}
+{#        (function worker(activeChannels) {#}
+{#            $.ajax({#}
+{#                url: '_getWLMData/' + activeChannels,#}
+{#                success: function (data) {#}
+{#                    wlmData = data.result;#}
+{#                    console.log(wlmData)#}
+{#                },#}
+{#                complete: function () {#}
+{#                    // Schedule the next request when the current one's complete#}
+{#                    setTimeout(worker, 500);#}
+{#                }#}
+{#            });#}
+{#        })();#}
 
         $(".ChanToggleButton").click(function () {
             $(this).button('toggle');
