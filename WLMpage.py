@@ -73,7 +73,9 @@ def getWLMData():
 
         if len(commonDataStruct) > 1:
             # activeChannels=[i for i, e in enumerate(a) if e != 0]
-            dat={i: random.randint(0, 10) for i in range(1, 9)}
+
+            dat={i: i for i in range(1, 9)}
+
             return jsonify(dat)  # returning data from the server to the client works
             # return jsonify(result=my_var)
         else:
