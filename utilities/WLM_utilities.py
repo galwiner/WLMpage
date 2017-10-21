@@ -18,11 +18,16 @@ def getFreqChan(chan):
 
 
 def setExposure(chan,exposure):
+    # TODO: enable exposre control
     set_exp = r.lib.SetExposureNum
     set_exp.restype = c_double
     ret=set_exp(chan,1,50)
     return ret
 
+def setAutoExposure(chan):
+    #TODO implement an auto exposure feature. should work the same as it does in the desktop software - increase exposure from 0 until you get something
+    # not sure how the two channels need to be increased. one by one? check how it works in the desktop version.
+    pass
 
 if __name__ == '__main__':
     r = spectrometer.Spectrometer()

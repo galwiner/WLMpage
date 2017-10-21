@@ -3,11 +3,19 @@
  #topheading {float: left;font-size: 350%}
 #header{background: #132226 }
 #freqIndicator{background: #132226 !important;}
- /*!
- * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)
- * Copyright 2013-2017 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
- */
+#footer {
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:60px;   /* Height of the footer */
+   background:#040c0e;
+  color: #040c0e;
+  text-decoration: none;
+}
+#fa{
+  color: #040c0e;
+  text-decoration: none;
+}
 
 body {
   overflow-x: hidden;

@@ -5,6 +5,7 @@
 {% block content %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
+{#    TODO: move all scripts to a separate file#}
         $(function () {
 
             // We use an inline data source in the example, usually data would
@@ -439,6 +440,7 @@
                         Channel Exposure Settings
                     </a>
                 </li>
+{#                TODO: add callbacks for exposure control#}
                 <div id="channelExposures" class="collapse">
                     <li>
                         <div class="row">
@@ -520,34 +522,6 @@
                 <div class="col-lg-12 chanfreq" id="chan8"></div>
             </div>
         </div>
-
-        {#creating the channel toggle switches#}
-        {#        <div class="btn-group">#}
-        {#            <label class="checkbox-inline">#}
-        {#                <input id="chan1Toggle" type="checkbox" data-toggle="toggle">MASTER#}
-        {#            </label>#}
-        {#            <label class="checkbox-inline">#}
-        {#                <input id="chan2Toggle" type="checkbox" data-toggle="toggle"> MOT COOLING#}
-        {#            </label>#}
-        {#            <label class="checkbox-inline">#}
-        {#                <input id="chan3Toggle" type="checkbox" data-toggle="toggle"> MOT REPUMP#}
-        {#            </label>#}
-        {#            <label class="checkbox-inline">#}
-        {#                <input id="chan4Toggle" type="checkbox" data-toggle="toggle"> Chan 4#}
-        {#            </label>#}
-        {#            <label class="checkbox-inline">#}
-        {#                <input id="chan5Toggle" type="checkbox" data-toggle="toggle"> Chan 5#}
-        {#            </label>#}
-        {#            <label class="checkbox-inline">#}
-        {#                <input id="chan6Toggle" type="checkbox" data-toggle="toggle"> Chan 6#}
-        {#            </label>#}
-        {#            <label class="checkbox-inline">#}
-        {#                <input id="chan7Toggle" type="checkbox" data-toggle="toggle"> Chan 7#}
-        {#            </label>#}
-        {#            <label class="checkbox-inline">#}
-        {#                <input id="chan8Toggle" type="checkbox" data-toggle="toggle"> Chan 8#}
-        {#            </label>#}
-        {#        </div>#}
 
         <!-- Sidebar -->
 
