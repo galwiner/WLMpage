@@ -331,114 +331,173 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="#">
+                    <a data-toggle="collapse" href="#channelToggles">
                         Channel Activation
                     </a>
                 </li>
-                <li>
-                    <label class="checkbox-inline">
-                        <input id="chan1Toggle" type="checkbox" data-toggle="toggle">MASTER
-                    </label>
-                <li>
-                    <label class="checkbox-inline">
-                        <input id="chan2Toggle" type="checkbox" data-toggle="toggle"> MOT COOLING
-                    </label>
-                </li>
-                <li>
-                    <label class="checkbox-inline">
-                        <input id="chan3Toggle" type="checkbox" data-toggle="toggle"> MOT REPUMP
-                    </label>
-                </li>
-                <li>
-                    <label class="checkbox-inline">
-                        <input id="chan4Toggle" type="checkbox" data-toggle="toggle"> Chan 4
-                    </label>
-                </li>
-                <li>
-                    <label class="checkbox-inline">
-                        <input id="chan5Toggle" type="checkbox" data-toggle="toggle"> Chan 5
-                    </label>
-                </li>
-                <li>
-                    <label class="checkbox-inline">
-                        <input id="chan6Toggle" type="checkbox" data-toggle="toggle"> Chan 6
-                    </label>
-                </li>
-                <li>
-                    <label class="checkbox-inline">
-                        <input id="chan7Toggle" type="checkbox" data-toggle="toggle"> Chan 7
-                    </label>
-                </li>
-                <li>
-                    <label class="checkbox-inline">
-                        <input id="chan8Toggle" type="checkbox" data-toggle="toggle"> Chan 8
-                    </label>
-                </li>
+                <div id=channelToggles class="collapse">
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="checkbox-inline">MASTER</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input id="chan1Toggle" type="checkbox" data-toggle="toggle">
+                            </div>
+                        </div>
 
-                <div class="row"><hr></div>
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="checkbox-inline">MOT COOLING</label>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <input id="chan2Toggle" type="checkbox" data-toggle="toggle">
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="checkbox-inline"> MOT REPUMP</label>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <input id="chan3Toggle" type="checkbox" data-toggle="toggle">
+                            </div>
+                        </div>
+
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="checkbox-inline"> Chan 4</label>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <input id="chan4Toggle" type="checkbox" data-toggle="toggle">
+                            </div>
+                        </div>
+
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="checkbox-inline"> Chan5</label>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <input id="chan5Toggle" type="checkbox" data-toggle="toggle">
+                            </div>
+                        </div>
+
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="checkbox-inline"> Chan6</label>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <input id="chan6Toggle" type="checkbox" data-toggle="toggle">
+                            </div>
+                        </div>
+
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="checkbox-inline"> Chan7</label>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <input id="chan7Toggle" type="checkbox" data-toggle="toggle">
+                            </div>
+                        </div>
+
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="checkbox-inline">Chan8</label>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <input id="chan8Toggle" type="checkbox" data-toggle="toggle">
+                            </div>
+                        </div>
+
+                    </li>
+                </div>
+
+                <div class="row">
+                    <hr>
+                </div>
                 <li class="sidebar-brand">
-                    <a href="#">
+                    <a data-toggle="collapse" href="#channelExposures">
                         Channel Exposure Settings
                     </a>
                 </li>
-                <li>
-                    <div class="row">
-                        <div class="col-lg-6">chan1</div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="row">
-                        <div class="col-lg-6">chan2</div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
-                    </div>
-                </li>
+                <div id="channelExposures" class="collapse">
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">chan1</div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">chan2</div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                        </div>
+                    </li>
 
-                <li>
-                    <div class="row">
-                        <div class="col-lg-6">chan3</div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="row">
-                        <div class="col-lg-6">chan4</div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="row">
-                        <div class="col-lg-6">chan5</div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="row">
-                        <div class="col-lg-6">chan6</div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="row">
-                        <div class="col-lg-6">chan7</div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="row">
-                        <div class="col-lg-6">chan8</div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
-                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
-                    </div>
-                </li>
-
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">chan3</div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">chan4</div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">chan5</div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">chan6</div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">chan7</div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="row">
+                            <div class="col-lg-6">chan8</div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                            <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                        </div>
+                    </li>
+                </div>
             </ul>
         </div>
         <div class="container-fluid" id="freqIndicator">
