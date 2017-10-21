@@ -44,8 +44,30 @@
             }
 
             function getWLMdata() {
+
+                if (data.length > 0)
+                    data = data.slice(1);
+
+                // Do a random walk
+
+                while (data.length < totalPoints) {
+
+
+
+                    y=2;
+
+                    if (y < 0) {
+                        y = 0;
+                    } else if (y > 100) {
+                        y = 100;
+                    }
+
+                    data.push(y);
+                }
+
+                // Zip the generated y values with the x values
+
                 var res = [];
-                data = [Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random()];
                 for (var i = 0; i < data.length; ++i) {
                     res.push([i, data[i]])
                 }
@@ -74,71 +96,73 @@
                 }
             });
 
-            var plot = $.plot("#graph", [getRandomData()], {
+{#            var plot = $.plot("#graph", [getWLMdata()], {#}
                 {#            var plot = $.plot("#graph", [getWLMdata()], {#}
-                series: {
-                    shadowSize: 0	// Drawing is faster without shadows
-                },
-                yaxis: {
-                    min: 0,
-                    max: 100
-                },
-                xaxis: {
-                    show: true
-                }
-            });
+{#                series: {#}
+{#                    shadowSize: 0	// Drawing is faster without shadows#}
+{#                },#}
+{#                yaxis: {#}
+{#                    min: 0,#}
+{#                    max: 10#}
+{#                },#}
+{#                xaxis: {#}
+{#                    show: true#}
+{#                }#}
+{#            });#}
 
 
             function update() {
-                $("#chan1").text(wlmData)
 
 
-                plot.setData([getRandomData(), getWLMdata(), getRandomData()]);
+
+
+{#                plot.setData([getWLMdata(),getWLMdata()]);#}
 
                 // Since the axes don't change, we don't need to call plot.setupGrid()
 
-                plot.draw();
+{#                plot.draw();#}
                 setTimeout(update, updateInterval);
 
 
                 if (activeChannels[0]) {
-                    $("#chan1").text(wlmData)
+                    $("#chan1").text("Master: " + wlmData[1] + " THz");
+
                     {#                    $("#chan1").text("Master: " + (Math.random() + 384.230406373).toFixed(5) + " THz")#}
                 } else {
                     $("#chan1").text("Master: OFF")
                 }
                 if (activeChannels[1]) {
-                    $("#chan2").text("MOT COOLING: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                    $("#chan2").text("MOT COOLING: " + wlmData[2] +  " THz")
                 } else {
                     $("#chan2").text("MOT COOLING: OFF")
                 }
                 if (activeChannels[2]) {
-                    $("#chan3").text("Chan3: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                    $("#chan3").text("Chan3: " + wlmData[3] +  " THz")
                 } else {
                     $("#chan3").text("Chan3: OFF")
                 }
                 if (activeChannels[3]) {
-                    $("#chan4").text("Chan4: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                    $("#chan4").text("Chan4: " + wlmData[4] +  " THz")
                 } else {
                     $("#chan4").text("Chan4: OFF")
                 }
                 if (activeChannels[4]) {
-                    $("#chan5").text("Chan5: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                    $("#chan5").text("Chan5: " + wlmData[5] +  " THz")
                 } else {
                     $("#chan5").text("Chan5: OFF")
                 }
                 if (activeChannels[5]) {
-                    $("#chan6").text("Chan6: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                    $("#chan6").text("Chan6: " + wlmData[6] +  " THz")
                 } else {
                     $("#chan6").text("Chan6: OFF")
                 }
                 if (activeChannels[6]) {
-                    $("#chan7").text("Chan7: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                    $("#chan7").text("Chan7: "+ wlmData[7] +  " THz")
                 } else {
                     $("#chan7").text("Chan7: OFF")
                 }
                 if (activeChannels[7]) {
-                    $("#chan8").text("Chan8: " + (Math.random() + 384.230406373).toFixed(5) + " THz")
+                    $("#chan8").text("Chan8: " + wlmData[8] +  " THz")
                 } else {
                     $("#chan8").text("Chan8: OFF")
                 }
@@ -162,32 +186,31 @@
                 } else {
                     activeChannels[0] = 0;
                 }
-                console.log(activeChannels);
-                var jsonActiveChan= 'GAL';
-{#                JSON.stringify(activeChannels);#}
+
+
+                {#                JSON.stringify(activeChannels);#}
                 $.ajax({
-            url: '_setWLMChannels',
-            data: vvJSON.stringify(activeChannels),
-            type: 'POST',
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
+                    method:'POST',
+                    contentType: "application/json",
+                    url:'_setWLMChannels',
+                    data: JSON.stringify({'activeChannels':activeChannels}),
+                    error: function(e) {
+                        console.log(e)
+                    },
+                    dataType: 'json'});
+                });
 
-{#                $.post({{ url_for('setWLMChannels'), activeChannels:"Gal"} }})#}
+                {#                $.post({{ url_for('setWLMChannels'), activeChannels:"Gal"} }})#}
 
 
-            });
+
             $('#chan2Toggle').change(function () {
                 if ($(this).prop('checked')) {
                     activeChannels[1] = 1;
                 } else {
                     activeChannels[1] = 0;
                 }
-                console.log(activeChannels);
+
 
             });
             $('#chan3Toggle').change(function () {
@@ -196,7 +219,7 @@
                 } else {
                     activeChannels[2] = 0;
                 }
-                console.log(activeChannels);
+
 
             });
             $('#chan4Toggle').change(function () {
@@ -205,7 +228,7 @@
                 } else {
                     activeChannels[3] = 0;
                 }
-                console.log(activeChannels);
+
 
             });
             $('#chan5Toggle').change(function () {
@@ -214,7 +237,7 @@
                 } else {
                     activeChannels[4] = 0;
                 }
-                console.log(activeChannels);
+
 
             });
             $('#chan6Toggle').change(function () {
@@ -223,7 +246,7 @@
                 } else {
                     activeChannels[5] = 0;
                 }
-                console.log(activeChannels);
+
 
             });
             $('#chan7Toggle').change(function () {
@@ -232,7 +255,7 @@
                 } else {
                     activeChannels[6] = 0;
                 }
-                console.log(activeChannels);
+
 
             });
             $('#chan8Toggle').change(function () {
@@ -241,13 +264,27 @@
                 } else {
                     activeChannels[7] = 0;
                 }
-                console.log(activeChannels);
+
 
             });
 
 
-            // Add the Flot version string to the footer
 
+            var wlmData = {};
+            (function worker() {
+                $.ajax({
+                    dataType: "json",
+                    url: '_getWLMData/',
+                    success: function (data) {
+                        wlmData = data;
+
+                    },
+                    complete: function () {
+                        // Schedule the next request when the current one's complete
+                        setTimeout(worker, 100);
+                    }
+                });
+            })();
 
         });
     </script>
@@ -268,19 +305,20 @@
         {#                        return false;#}
         {#                    });#}
         {#                });#}
-        var wlmData;
-        (function worker() {
-            $.ajax({
-                url: '/_getWLMData',
-                success: function (data) {
-                    wlmData = data.result;
-                },
-                complete: function () {
-                    // Schedule the next request when the current one's complete
-                    setTimeout(worker, 500);
-                }
-            });
-        })();
+{#        var wlmData;#}
+{#        (function worker(activeChannels) {#}
+{#            $.ajax({#}
+{#                url: '_getWLMData/' + activeChannels,#}
+{#                success: function (data) {#}
+{#                    wlmData = data.result;#}
+{#                    console.log(wlmData)#}
+{#                },#}
+{#                complete: function () {#}
+{#                    // Schedule the next request when the current one's complete#}
+{#                    setTimeout(worker, 500);#}
+{#                }#}
+{#            });#}
+{#        })();#}
 
         $(".ChanToggleButton").click(function () {
             $(this).button('toggle');
@@ -339,7 +377,7 @@
         </label>
     </div>
 
-    <div id="graph"></div>
+{#    <div id="graph"></div>#}
 
     <script>
         $(function () {
