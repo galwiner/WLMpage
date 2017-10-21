@@ -1,3 +1,5 @@
+{#<script language="javascript" type="text/javascript"#}
+{#            src={{ url_for('static', filename='WLMpageScripts.js') }}></script>#}
 {% extends 'layout.html' %}
 
 {% block content %}
@@ -53,8 +55,7 @@
                 while (data.length < totalPoints) {
 
 
-
-                    y=2;
+                    y = 2;
 
                     if (y < 0) {
                         y = 0;
@@ -96,19 +97,19 @@
                 }
             });
 
-{#            var plot = $.plot("#graph", [getWLMdata()], {#}
-                {#            var plot = $.plot("#graph", [getWLMdata()], {#}
-{#                series: {#}
-{#                    shadowSize: 0	// Drawing is faster without shadows#}
-{#                },#}
-{#                yaxis: {#}
-{#                    min: 0,#}
-{#                    max: 10#}
-{#                },#}
-{#                xaxis: {#}
-{#                    show: true#}
-{#                }#}
-{#            });#}
+            {#            var plot = $.plot("#graph", [getWLMdata()], {#}
+            {#            var plot = $.plot("#graph", [getWLMdata()], {#}
+            {#                series: {#}
+            {#                    shadowSize: 0	// Drawing is faster without shadows#}
+            {#                },#}
+            {#                yaxis: {#}
+            {#                    min: 0,#}
+            {#                    max: 10#}
+            {#                },#}
+            {#                xaxis: {#}
+            {#                    show: true#}
+            {#                }#}
+            {#            });#}
 
 
             function update() {
@@ -116,11 +117,11 @@
 
 
 
-{#                plot.setData([getWLMdata(),getWLMdata()]);#}
+                {#                plot.setData([getWLMdata(),getWLMdata()]);#}
 
                 // Since the axes don't change, we don't need to call plot.setupGrid()
 
-{#                plot.draw();#}
+                {#                plot.draw();#}
                 setTimeout(update, updateInterval);
 
 
@@ -132,37 +133,37 @@
                     $("#chan1").text("Master: OFF")
                 }
                 if (activeChannels[1]) {
-                    $("#chan2").text("MOT COOLING: " + wlmData[2] +  " THz")
+                    $("#chan2").text("MOT COOLING: " + wlmData[2] + " THz")
                 } else {
                     $("#chan2").text("MOT COOLING: OFF")
                 }
                 if (activeChannels[2]) {
-                    $("#chan3").text("Chan3: " + wlmData[3] +  " THz")
+                    $("#chan3").text("Chan3: " + wlmData[3] + " THz")
                 } else {
                     $("#chan3").text("Chan3: OFF")
                 }
                 if (activeChannels[3]) {
-                    $("#chan4").text("Chan4: " + wlmData[4] +  " THz")
+                    $("#chan4").text("Chan4: " + wlmData[4] + " THz")
                 } else {
                     $("#chan4").text("Chan4: OFF")
                 }
                 if (activeChannels[4]) {
-                    $("#chan5").text("Chan5: " + wlmData[5] +  " THz")
+                    $("#chan5").text("Chan5: " + wlmData[5] + " THz")
                 } else {
                     $("#chan5").text("Chan5: OFF")
                 }
                 if (activeChannels[5]) {
-                    $("#chan6").text("Chan6: " + wlmData[6] +  " THz")
+                    $("#chan6").text("Chan6: " + wlmData[6] + " THz")
                 } else {
                     $("#chan6").text("Chan6: OFF")
                 }
                 if (activeChannels[6]) {
-                    $("#chan7").text("Chan7: "+ wlmData[7] +  " THz")
+                    $("#chan7").text("Chan7: " + wlmData[7] + " THz")
                 } else {
                     $("#chan7").text("Chan7: OFF")
                 }
                 if (activeChannels[7]) {
-                    $("#chan8").text("Chan8: " + wlmData[8] +  " THz")
+                    $("#chan8").text("Chan8: " + wlmData[8] + " THz")
                 } else {
                     $("#chan8").text("Chan8: OFF")
                 }
@@ -190,18 +191,18 @@
 
                 {#                JSON.stringify(activeChannels);#}
                 $.ajax({
-                    method:'POST',
+                    method: 'POST',
                     contentType: "application/json",
-                    url:'_setWLMChannels',
-                    data: JSON.stringify({'activeChannels':activeChannels}),
-                    error: function(e) {
+                    url: '_setWLMChannels',
+                    data: JSON.stringify({'activeChannels': activeChannels}),
+                    error: function (e) {
                         console.log(e)
                     },
-                    dataType: 'json'});
+                    dataType: 'json'
                 });
+            });
 
-                {#                $.post({{ url_for('setWLMChannels'), activeChannels:"Gal"} }})#}
-
+            {#                $.post({{ url_for('setWLMChannels'), activeChannels:"Gal"} }})#}
 
 
             $('#chan2Toggle').change(function () {
@@ -269,7 +270,6 @@
             });
 
 
-
             var wlmData = {};
             (function worker() {
                 $.ajax({
@@ -305,80 +305,195 @@
         {#                        return false;#}
         {#                    });#}
         {#                });#}
-{#        var wlmData;#}
-{#        (function worker(activeChannels) {#}
-{#            $.ajax({#}
-{#                url: '_getWLMData/' + activeChannels,#}
-{#                success: function (data) {#}
-{#                    wlmData = data.result;#}
-{#                    console.log(wlmData)#}
-{#                },#}
-{#                complete: function () {#}
-{#                    // Schedule the next request when the current one's complete#}
-{#                    setTimeout(worker, 500);#}
-{#                }#}
-{#            });#}
-{#        })();#}
+        {#        var wlmData;#}
+        {#        (function worker(activeChannels) {#}
+        {#            $.ajax({#}
+        {#                url: '_getWLMData/' + activeChannels,#}
+        {#                success: function (data) {#}
+        {#                    wlmData = data.result;#}
+        {#                    console.log(wlmData)#}
+        {#                },#}
+        {#                complete: function () {#}
+        {#                    // Schedule the next request when the current one's complete#}
+        {#                    setTimeout(worker, 500);#}
+        {#                }#}
+        {#            });#}
+        {#        })();#}
 
         $(".ChanToggleButton").click(function () {
             $(this).button('toggle');
         });
 
     </script>
-    {#<p><span id=result>?</span>
-    <p><a href=# id=calculate>poll WLM</a>#}
 
-    <div class="container-fluid" id="freqIndicator">
-        <div class="row">
-            <div class="col-lg-12 chanfreq" id="chan1"></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 chanfreq" id="chan2"></div>
-            <div class="col-lg-6 chanfreq" id="chan3"></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 chanfreq" id="chan4"></div>
-            <div class="col-lg-6 chanfreq" id="chan5"></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 chanfreq" id="chan6"></div>
-            <div class="col-lg-6 chanfreq" id="chan7"></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 chanfreq" id="chan8"></div>
-        </div>
-    </div>
+    <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Channel Activation
+                    </a>
+                </li>
+                <li>
+                    <label class="checkbox-inline">
+                        <input id="chan1Toggle" type="checkbox" data-toggle="toggle">MASTER
+                    </label>
+                <li>
+                    <label class="checkbox-inline">
+                        <input id="chan2Toggle" type="checkbox" data-toggle="toggle"> MOT COOLING
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox-inline">
+                        <input id="chan3Toggle" type="checkbox" data-toggle="toggle"> MOT REPUMP
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox-inline">
+                        <input id="chan4Toggle" type="checkbox" data-toggle="toggle"> Chan 4
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox-inline">
+                        <input id="chan5Toggle" type="checkbox" data-toggle="toggle"> Chan 5
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox-inline">
+                        <input id="chan6Toggle" type="checkbox" data-toggle="toggle"> Chan 6
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox-inline">
+                        <input id="chan7Toggle" type="checkbox" data-toggle="toggle"> Chan 7
+                    </label>
+                </li>
+                <li>
+                    <label class="checkbox-inline">
+                        <input id="chan8Toggle" type="checkbox" data-toggle="toggle"> Chan 8
+                    </label>
+                </li>
 
-    {#creating the channel toggle switches#}
-    <div class="btn-group">
-        <label class="checkbox-inline">
-            <input id="chan1Toggle" type="checkbox" data-toggle="toggle">MASTER
-        </label>
-        <label class="checkbox-inline">
-            <input id="chan2Toggle" type="checkbox" data-toggle="toggle"> MOT COOLING
-        </label>
-        <label class="checkbox-inline">
-            <input id="chan3Toggle" type="checkbox" data-toggle="toggle"> MOT REPUMP
-        </label>
-        <label class="checkbox-inline">
-            <input id="chan4Toggle" type="checkbox" data-toggle="toggle"> Chan 4
-        </label>
-        <label class="checkbox-inline">
-            <input id="chan5Toggle" type="checkbox" data-toggle="toggle"> Chan 5
-        </label>
-        <label class="checkbox-inline">
-            <input id="chan6Toggle" type="checkbox" data-toggle="toggle"> Chan 6
-        </label>
-        <label class="checkbox-inline">
-            <input id="chan7Toggle" type="checkbox" data-toggle="toggle"> Chan 7
-        </label>
-        <label class="checkbox-inline">
-            <input id="chan8Toggle" type="checkbox" data-toggle="toggle"> Chan 8
-        </label>
-    </div>
+                <div class="row"><hr></div>
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Channel Exposure Settings
+                    </a>
+                </li>
+                <li>
+                    <div class="row">
+                        <div class="col-lg-6">chan1</div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="row">
+                        <div class="col-lg-6">chan2</div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                    </div>
+                </li>
 
-{#    <div id="graph"></div>#}
+                <li>
+                    <div class="row">
+                        <div class="col-lg-6">chan3</div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="row">
+                        <div class="col-lg-6">chan4</div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="row">
+                        <div class="col-lg-6">chan5</div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="row">
+                        <div class="col-lg-6">chan6</div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="row">
+                        <div class="col-lg-6">chan7</div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="row">
+                        <div class="col-lg-6">chan8</div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e1"></div>
+                        <div class="col-lg-3"><input type="text" class="form-control" placeholder="e2"></div>
+                    </div>
+                </li>
 
+            </ul>
+        </div>
+        <div class="container-fluid" id="freqIndicator">
+            <div class="row">
+                <div class="col-lg-12 chanfreq" id="chan1"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 chanfreq" id="chan2"></div>
+                <div class="col-lg-6 chanfreq" id="chan3"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 chanfreq" id="chan4"></div>
+                <div class="col-lg-6 chanfreq" id="chan5"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 chanfreq" id="chan6"></div>
+                <div class="col-lg-6 chanfreq" id="chan7"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 chanfreq" id="chan8"></div>
+            </div>
+        </div>
+
+        {#creating the channel toggle switches#}
+        {#        <div class="btn-group">#}
+        {#            <label class="checkbox-inline">#}
+        {#                <input id="chan1Toggle" type="checkbox" data-toggle="toggle">MASTER#}
+        {#            </label>#}
+        {#            <label class="checkbox-inline">#}
+        {#                <input id="chan2Toggle" type="checkbox" data-toggle="toggle"> MOT COOLING#}
+        {#            </label>#}
+        {#            <label class="checkbox-inline">#}
+        {#                <input id="chan3Toggle" type="checkbox" data-toggle="toggle"> MOT REPUMP#}
+        {#            </label>#}
+        {#            <label class="checkbox-inline">#}
+        {#                <input id="chan4Toggle" type="checkbox" data-toggle="toggle"> Chan 4#}
+        {#            </label>#}
+        {#            <label class="checkbox-inline">#}
+        {#                <input id="chan5Toggle" type="checkbox" data-toggle="toggle"> Chan 5#}
+        {#            </label>#}
+        {#            <label class="checkbox-inline">#}
+        {#                <input id="chan6Toggle" type="checkbox" data-toggle="toggle"> Chan 6#}
+        {#            </label>#}
+        {#            <label class="checkbox-inline">#}
+        {#                <input id="chan7Toggle" type="checkbox" data-toggle="toggle"> Chan 7#}
+        {#            </label>#}
+        {#            <label class="checkbox-inline">#}
+        {#                <input id="chan8Toggle" type="checkbox" data-toggle="toggle"> Chan 8#}
+        {#            </label>#}
+        {#        </div>#}
+
+        <!-- Sidebar -->
+
+        {#    <div id="graph"></div>#}
+    </div> {#  /wrapper #}
     <script>
         $(function () {
 
@@ -402,7 +517,10 @@
 
 
         })
-
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
 
     </script>
 

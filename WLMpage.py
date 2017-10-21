@@ -3,7 +3,7 @@ import os
 from flask import Flask, jsonify, render_template, request, json
 
 import utilities.database_utilities as db
-import utilities.WLM_utilities as wlm
+# import utilities.WLM_utilities as wlm
 import threading
 import atexit
 import datetime
@@ -13,13 +13,13 @@ import datetime
 POOL_TIME = 0.1  # Seconds
 
 # variables that are accessible from anywhere
-commonDataStruct = []
+activeChannels = []
 # lock to control access to variable
 dataLock = threading.Lock()
 # thread handler
 yourThread = threading.Thread()
 
-wlm.WLMstart()
+# wlm.WLMstart()
 
 
 def create_app():
@@ -39,11 +39,12 @@ def create_app():
         yourThread.start()
 
     def doBackgroundTask():
-        global commonDataStruct
+        global activeChannels
+        global channelExposure
         global yourThread
         with dataLock:
             # Do your stuff with commonDataStruct Here
-            commonDataStruct.append(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            activeChannels.append(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
         # Set the next thread to happen
         yourThread = threading.Timer(POOL_TIME, doBackgroundTask, ())
@@ -67,7 +68,7 @@ def readWLM():
 def getWLMData():
     with dataLock:
 
-        if len(commonDataStruct) > 1:
+        if len(activeChannels) > 1:
             # activeChannels=[i for i, e in enumerate(a) if e != 0]
 
             dat={i: wlm.getFreqChan(i) for i in range(1, 9)}
@@ -80,9 +81,13 @@ def getWLMData():
 
 @app.route('/_setWLMChannels', methods=['POST'])
 def setWLMChannels():
-    commonDataStruct = request.json['activeChannels']
+    activeChannels = request.json['activeChannels']
     return json.dumps({'status': 'OK'})
 
+@app.route('/_setchannelExposure', methods=['POST'])
+def setchannelExposure():
+    channelExposure = request.json['channelExposure']
+    return json.dumps({'status': 'OK'})
 
 @app.route('/')
 def index():
@@ -90,8 +95,9 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(host='10.10.10.3', port='5000')
-    # app.run(debug=True)
+    # app.run(host='192.168.0.101', port='5000')
+    # app.run(host='10.10.10.3', port='5000')
+    app.run(debug=True)
 # working code to get frequency for WLM
 
 # r.lib.Operation(r.cCtrlStartMeasurement)
