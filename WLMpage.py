@@ -3,7 +3,7 @@ import os
 from flask import Flask, jsonify, render_template, request, json
 
 import utilities.database_utilities as db
-# import utilities.WLM_utilities as wlm
+import utilities.WLM_utilities as wlm
 import threading
 import atexit
 import datetime
@@ -19,7 +19,7 @@ dataLock = threading.Lock()
 # thread handler
 yourThread = threading.Thread()
 
-# wlm.WLMstart()
+wlm.WLMstart()
 
 
 def create_app():
@@ -71,7 +71,7 @@ def getWLMData():
         if len(activeChannels) > 1:
             # activeChannels=[i for i, e in enumerate(a) if e != 0]
 
-            dat={i: wlm.getFreqChan(i) for i in range(1, 9)}
+            dat = {i: format(wlm.getFreqChan(i), '.5f') for i in range(1, 9)}
 
             return jsonify(dat)  # returning data from the server to the client works
             # return jsonify(result=my_var)
@@ -84,10 +84,12 @@ def setWLMChannels():
     activeChannels = request.json['activeChannels']
     return json.dumps({'status': 'OK'})
 
+
 @app.route('/_setchannelExposure', methods=['POST'])
 def setchannelExposure():
     channelExposure = request.json['channelExposure']
     return json.dumps({'status': 'OK'})
+
 
 @app.route('/')
 def index():
@@ -96,8 +98,8 @@ def index():
 
 if __name__ == '__main__':
     # app.run(host='192.168.0.101', port='5000')
-    # app.run(host='10.10.10.3', port='5000')
-    app.run(debug=True)
+    app.run(host='10.10.10.3', port='5000')
+    # app.run(debug=True)
 # working code to get frequency for WLM
 
 # r.lib.Operation(r.cCtrlStartMeasurement)
