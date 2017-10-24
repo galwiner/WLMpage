@@ -71,7 +71,7 @@ def getWLMData():
         if len(activeChannels) > 1:
             # activeChannels=[i for i, e in enumerate(a) if e != 0]
 
-            dat = {i: format(wlm.getFreqChan(i), '.5f') for i in range(1, 9)}
+            dat = {i: format(wlm.getFreqNum(i), '.5f') for i in range(1, 9)}
 
             return jsonify(dat)  # returning data from the server to the client works
             # return jsonify(result=my_var)

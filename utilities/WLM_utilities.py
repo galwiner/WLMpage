@@ -7,9 +7,10 @@ r = spectrometer.Spectrometer()
 def WLMstart():
     r.lib.Operation(r.cCtrlStartMeasurement)
     r.lib.SetSwitcherMode(1)
+    [setExposureModeNum(i, 1) for i in range(1, 8)]
 
 
-def getFreqChan(chan):
+def getFreqNum(chan):
     get_freq = r.lib.GetFrequencyNum
     get_freq.restype = c_double
     return get_freq(chan, 0)
@@ -36,7 +37,7 @@ def getExposureModeNum(chan):
     return ret
 
 
-def setAutoExposureModeNum(chan, set):
+def setExposureModeNum(chan, set):
     exp_mode = r.lib.SetExposureModeNum
     exp_mode.restype = c_long
     ret = exp_mode(chan, set)
@@ -56,6 +57,21 @@ def setSwitcherMode(set):
     ret = mode(set)
     return ret
 
+def getSwitcherChannel():
+    getChan = r.lib.GetSwitcherChannel
+    getChan.restype = c_long
+    ret = getChan(0)
+    return ret
+
+def setSwitcherChannel(chan):
+    setChan = r.lib.SetSwitcherChannel
+    setChan.restype = c_long
+    ret = setChan(chan)
+    return ret
+
+def setSwitcherSingals(listOfChans):
+    '''set the channels the WLM cycles through when in switcher mode'''
+    pass
 
 # def setAutoExposure(chan):
 #     #TODO implement an auto exposure feature. should work the same as it does in the desktop software - increase exposure from 0 until you get something
@@ -65,7 +81,7 @@ def setSwitcherMode(set):
 if __name__ == '__main__':
     r = spectrometer.Spectrometer()
     WLMstart()
-    print(getFreqChan(1))
+    print(getFreqNum(1))
     # setExposure(1,50)
     # print(getExposure(1))
     print(SetAutoExposure(True, 1))
