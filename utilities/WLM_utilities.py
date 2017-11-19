@@ -1,10 +1,12 @@
 from lsa import spectrometer
 from ctypes import c_double, c_bool, c_long
+import time
 
 r = spectrometer.Spectrometer()
 
 
 def WLMstart():
+    r.lib.Operation(r.cCtrlStopAll)
     r.lib.Operation(r.cCtrlStartMeasurement)
     r.lib.SetSwitcherMode(1)
     [setExposureModeNum(i, 1) for i in range(1, 8)]
@@ -16,18 +18,21 @@ def getFreqNum(chan):
     return get_freq(chan, 0)
 
 
-def setExposureNum(chan, exposure):
+def setExposureNum(chan, e1,e2):
+    # set the exposure values of
     set_exp = r.lib.SetExposureNum
     set_exp.restype = c_long
-    ret = set_exp(chan, 1, exposure)
-    return ret
+    ret1 = set_exp(chan, 1, e1)
+    ret2 = set_exp(chan, 2, e2)
+    return [ret1,ret2]
 
 
 def getExposureNum(chan):
     get_exp = r.lib.GetExposureNum
     get_exp.restype = c_long
-    ret = get_exp(chan, 1, 0)
-    return ret
+    ret1 = get_exp(chan, 1, 0)
+    ret2 = get_exp(chan, 1, 0)
+    return [ret1,ret2]
 
 
 def getExposureModeNum(chan):
@@ -68,6 +73,7 @@ def setSwitcherChannel(chan):
     setChan.restype = c_long
     ret = setChan(chan)
     return ret
+
 
 def setSwitcherSingals(listOfChans):
     '''set the channels the WLM cycles through when in switcher mode'''

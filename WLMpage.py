@@ -79,6 +79,17 @@ def getWLMData():
             return jsonify(result='Empty')
 
 
+@app.route('/_setExposure', methods=['POST'])
+def setExposureChan():
+    chan = request.json['chan']
+    e1 = request.json['e1']
+    e2 = request.json['e2']
+    wlm.setExposureModeNum(chan, 0)
+    wlm.setExposureNum(1, e1, e2)
+    print('set exposure')
+    return json.dumps({'status': 'OK'})
+
+
 @app.route('/_setWLMChannels', methods=['POST'])
 def setWLMChannels():
     activeChannels = request.json['activeChannels']
